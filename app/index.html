@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Platinum Guide — GTA 6 Trophy Guide &amp; Tracker</title>
+<meta name="description" content="Offline guide and tracker for all 55 Grand Theft Auto VI trophies on PlayStation 5: official list, cited guides, roadmap to the platinum, missable flags, saved progress.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23241a44'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='%23ffb347' font-family='sans-serif' font-weight='bold'%3EV%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+<header class="hero">
+  <div class="hero-inner">
+    <p class="eyebrow">Grand Theft Auto VI &middot; PlayStation 5</p>
+    <h1>Vice Platinum Guide</h1>
+    <p class="tagline">Every one of the 55 official trophies — what to do, where, when it can be missed — with a tracker that remembers your progress. Works offline, no account, no ads.</p>
+    <div class="counts" id="counts" aria-live="polite">
+      <span class="count"><strong id="count-total">55</strong> trophies</span>
+      <span class="count"><i class="dot dot-platinum"></i>1 Platinum</span>
+      <span class="count"><i class="dot dot-gold"></i>2 Gold</span>
+      <span class="count"><i class="dot dot-silver"></i>6 Silver</span>
+      <span class="count"><i class="dot dot-bronze"></i>46 Bronze</span>
+      <span class="count"><i class="dot dot-hidden"></i>28 hidden</span>
+    </div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span id="progress-text">0 of 55 earned</span><span id="progress-pct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+      <p class="progress-grades" id="progress-grades"></p>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs" aria-label="Views">
+  <button type="button" class="tab active" data-view="guide" id="tab-guide">Guide &amp; Tracker</button>
+  <button type="button" class="tab" data-view="roadmap" id="tab-roadmap">Roadmap to Platinum</button>
+  <button type="button" class="tab" data-view="missables" id="tab-missables">Missables <span class="pill" id="missable-count">1</span></button>
+</nav>
+
+<main>
+  <section id="view-guide" class="view">
+    <div class="controls">
+      <label class="control search-control">Search
+        <input type="search" id="search" placeholder="Search name or description…" autocomplete="off">
+      </label>
+      <label class="control">Kind
+        <select id="kind">
+          <option value="all">All kinds</option>
+          <option value="story">Story</option>
+          <option value="side">Side stories</option>
+          <option value="collectibles">Collectibles</option>
+          <option value="activities">Activities</option>
+          <option value="crime">Crime</option>
+          <option value="money">Money</option>
+          <option value="exploration">Exploration</option>
+          <option value="platinum">Platinum</option>
+        </select>
+      </label>
+      <label class="control">Grade
+        <select id="grade">
+          <option value="all">All grades</option>
+          <option value="platinum">Platinum</option>
+          <option value="gold">Gold</option>
+          <option value="silver">Silver</option>
+          <option value="bronze">Bronze</option>
+        </select>
+      </label>
+      <label class="control">Progress
+        <select id="earned-filter">
+          <option value="all">All trophies</option>
+          <option value="earned">Earned only</option>
+          <option value="unearned">Not yet earned</option>
+        </select>
+      </label>
+      <label class="check"><input type="checkbox" id="missable-only"> Missable only</label>
+      <label class="check" title="Hides the names and descriptions of hidden story trophies until you earn them"><input type="checkbox" id="spoiler"> Spoiler-safe mode</label>
+    </div>
+    <div class="controls-row">
+      <span id="result-count" class="muted"></span>
+      <span class="spacer"></span>
+      <button type="button" id="export" class="btn">Export progress</button>
+      <label class="btn btn-file" for="import-file">Import progress</label>
+      <input type="file" id="import-file" accept="application/json,.json" hidden>
+      <button type="button" id="reset" class="btn btn-danger">Reset progress</button>
+    </div>
+
+    <div class="layout">
+      <ol class="trophy-list" id="trophy-list" aria-label="Trophy list"></ol>
+      <aside class="detail" id="detail" aria-live="polite">
+        <p class="detail-empty">Select a trophy on the left to see its guide, steps and sources.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section id="view-roadmap" class="view" hidden>
+    <h2>Roadmap to the Platinum</h2>
+    <p class="lede">Around 200 hours, in one playthrough, no online trophies. The order below is built from the official trophy descriptions: story first, side stories second, free-roam activities and crime third, collectibles and the 100% checklist last. Nothing needs a second playthrough if you keep manual saves — except the one missable trophy, flagged in the Missables tab.</p>
+    <div class="save-rules">
+      <h3>Save rules that protect the whole run</h3>
+      <ul>
+        <li><strong>No mission replay, no New Game Plus.</strong> Keep one manual save at the start of every chapter and one untouched save from just before the final mission. The game has 15 manual save slots plus one autosave — rotate the rest.</li>
+        <li><strong>Never use cheats on your trophy save.</strong> Cheats switch off trophies and saving.</li>
+        <li><strong>Do Lucia's balcony meditation in Chapter 1</strong> (see Missables) — the only spot known to disappear.</li>
+        <li><strong>Do Race Against Yago the moment it appears</strong> in Chapter 3 — it is time-sensitive and its strand counts toward Strangers &amp; Freaks.</li>
+      </ul>
+      <p class="cite">Sources: <a href="https://outputlag.com/guides/gta-6-trophy-list/">Output Lag — GTA 6 Trophy List</a>; <a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/">Exophase — official list</a>.</p>
+    </div>
+    <div id="roadmap-stages"></div>
+  </section>
+
+  <section id="view-missables" class="view" hidden>
+    <h2>Missable trophies</h2>
+    <p class="lede">Only one trophy is confirmed missable. The rest of the list stays available after the credits, including the side-story finales and the 100% checklist — but the save rules in the Roadmap tab still apply, because there is no mission replay.</p>
+    <div id="missable-list"></div>
+  </section>
+</main>
+
+<footer>
+  <p>Names and descriptions are the official PlayStation 5 trophy list, as published on <a href="https://www.exophase.com/game/grand-theft-auto-vi-psn/trophies/">Exophase</a> and <a href="https://psnprofiles.com/trophies/43531-grand-theft-auto-vi">PSNProfiles</a> (verified 19 November 2026). Guides are written in the author's own words for this guide; each trophy cites its sources beside its guide. This is an independent fan guide — not affiliated with Rockstar Games. No Rockstar logo or artwork is used.</p>
+  <p>Progress is stored only in your browser (localStorage). Export and import it as JSON; nothing leaves your device.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

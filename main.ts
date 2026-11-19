@@ -1,13 +1,13 @@
-// Vice Platinum Guide — entry program (Node 22, standard library only).
+// Vice Platinum Guide — the entry program for gta6-trophy-guide-01.
 //
-// The guide itself is plain static files in app/ (index.html, app.js,
-// style.css, data/trophies.json) and its screenshots in screenshots/.
-// This program hands the guide in: it copies both folders into the
-// output directory and writes output/dossier.json with the make.fun
-// frontend library (vendor/makefun-frontend.ts, unchanged kit copy).
-// The scorer rebuilds the dossier from the same library and compares
-// the two byte for byte, so this program must not add, drop or edit
-// any file on the way through — it copies, then dossiers.
+// This program (Node 22, standard library only) hands the guide in. The
+// guide itself is plain static files in app/ (index.html, app.js, style.css
+// and data/trophies.json) plus the screenshots in screenshots/. This program
+// copies both folders into the output directory and writes
+// output/dossier.json with buildDossier from vendor/makefun-frontend.ts
+// (the kit copy, unchanged). The scorer rebuilds the dossier from the same
+// library and compares the two byte for byte, so this program copies files
+// through untouched — it never adds, drops or edits anything on the way.
 //
 // Run it locally with:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
@@ -18,13 +18,13 @@ import { basename, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
-// Where the repository lives (this file's folder) and where the entry goes.
+// The repository root (this file's folder) and the output directory.
 const repoRoot = fileURLToPath(new URL('.', import.meta.url));
 const outputDir = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
 
-// The dossier library's caps for this competition: the scorer refuses an
-// entry past them, so this program refuses to write one instead of
-// handing in something the gate would reject.
+// The dossier library's caps for this competition. The scorer refuses an
+// entry past them, so this program refuses to write one rather than hand
+// in something the gate would reject.
 const DOSSIER_OPTIONS = {
   text_max_bytes: 163840,
   screenshots: { max: 4, max_bytes: 262144 },
@@ -32,9 +32,9 @@ const DOSSIER_OPTIONS = {
   app_max_bytes: 50331648,
 };
 
-// Copy one directory tree into another, files and folders only, in
+// Copy a directory tree into another one, files and folders only, in
 // sorted order so the walk is deterministic. Symbolic links and other
-// special files are refused: the gate only accepts plain files.
+// special files are refused — the gate only accepts plain files.
 function copyTree(sourceDir, targetDir) {
   mkdirSync(targetDir, { recursive: true });
   const entries = readdirSync(sourceDir).sort();
@@ -52,15 +52,14 @@ function copyTree(sourceDir, targetDir) {
   }
 }
 
-function countFiles(dir) {
-  let files = 0;
-  let dirs = 0;
+function countEntries(dir) {
+  let total = 0;
   for (const name of readdirSync(dir)) {
     const info = statSync(join(dir, name));
-    if (info.isDirectory()) { dirs += 1; files += countFiles(join(dir, name)); }
-    else if (info.isFile()) { files += 1; }
+    if (info.isDirectory()) { total += 1; total += countEntries(join(dir, name)); }
+    else if (info.isFile()) { total += 1; }
   }
-  return files + dirs;
+  return total;
 }
 
 function fail(message) {
@@ -86,6 +85,8 @@ rmSync(outputDir, { recursive: true, force: true });
 mkdirSync(outputDir, { recursive: true });
 
 // Copy the guide and its screenshots through unchanged, then dossier them.
+// The dossier is deterministic: two runs over the same files produce the
+// same bytes (verified locally — same sha256 on repeat runs).
 copyTree(appDir, join(outputDir, 'app'));
 copyTree(shotsDir, join(outputDir, 'screenshots'));
 const dossier = buildDossier(outputDir, DOSSIER_OPTIONS);
@@ -96,6 +97,6 @@ const trophyData = JSON.parse(
   readFileSync(join(outputDir, 'app', 'data', 'trophies.json'), 'utf8'),
 );
 console.log(`Vice Platinum Guide: ${trophyData.trophies.length} trophies, `
-  + `${countFiles(join(outputDir, 'app'))} app entries, `
+  + `${countEntries(join(outputDir, 'app'))} app entries, `
   + `${shotNames.length} screenshots (${shotNames.map((n) => basename(n)).join(', ')}), `
   + `dossier ${dossier.length} bytes -> ${outputDir}`);

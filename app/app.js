@@ -1,6 +1,7 @@
-// Vice Platinum Guide — tracker + guide for the 55 GTA 6 trophies.
-// Static app, no network at run time except loading its own data file.
-// Progress lives in localStorage; export/import moves it as JSON.
+// Vice Platinum Guide — tracker and guide for the 55 GTA 6 trophies.
+// A static app: it loads only its own data file and makes no other
+// network request at run time. Progress lives in localStorage, and
+// export/import moves it around as JSON.
 const STORE_KEY = 'vice-platinum-guide-v1';
 const DATA_URL = 'data/trophies.json';
 
@@ -75,6 +76,10 @@ function badge(t) {
   return '<span class="badge badge-' + t.grade + '">' + GRADE_LABEL[t.grade] + '</span>';
 }
 
+function kindBadge(t) {
+  return t.kind !== 'platinum' ? '<span class="badge badge-kind">' + KIND_LABEL[t.kind] + '</span>' : '';
+}
+
 function renderProgress() {
   const total = trophies.length;
   const n = earned.size;
@@ -124,8 +129,7 @@ function renderList() {
     desc.textContent = '“' + displayDesc(t) + '”';
     const meta = document.createElement('div');
     meta.className = 'trophy-meta';
-    meta.innerHTML = badge(t)
-      + (t.kind !== 'platinum' ? '<span class="badge badge-kind">' + KIND_LABEL[t.kind] + '</span>' : '')
+    meta.innerHTML = badge(t) + kindBadge(t)
       + (t.secret ? '<span class="badge badge-secret">Hidden</span>' : '')
       + (t.missable ? '<span class="badge badge-missable">Missable</span>' : '')
       + (earned.has(t.id) ? '<span class="badge badge-earned">Earned ✓</span>' : '');
@@ -160,8 +164,7 @@ function renderDetail() {
   }
   detailEl.append(el('h2', null, t.name));
   const meta = el('div', 'trophy-meta');
-  meta.innerHTML = badge(t)
-    + (t.kind !== 'platinum' ? '<span class="badge badge-kind">' + KIND_LABEL[t.kind] + '</span>' : '')
+  meta.innerHTML = badge(t) + kindBadge(t)
     + (t.secret ? '<span class="badge badge-secret">Hidden</span>' : '')
     + (t.missable ? '<span class="badge badge-missable">Missable</span>' : '');
   detailEl.append(meta);
